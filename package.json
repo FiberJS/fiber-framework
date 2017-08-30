@@ -1,0 +1,28 @@
+{
+  "name": "fiber-framework",
+  "version": "1.0.0",
+  "description": "The Natural way of building JavaScript Applications",
+  "main": "fiber.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FiberJS/fiber-framework.git"
+  },
+  "keywords": [
+    "framework",
+    "event-driven",
+    "decoupled",
+    "loosely",
+    "coupled",
+    "JavaScript",
+    "ES6"
+  ],
+  "author": "Matyas Buczko",
+  "license": "UNLICENSE",
+  "bugs": {
+    "url": "https://github.com/FiberJS/fiber-framework/issues"
+  },
+  "homepage": "https://github.com/FiberJS/fiber-framework#readme"
+}

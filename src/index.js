@@ -1,49 +1,49 @@
 
-const Flight = {};
-export default Flight;
+const Fiber = {};
+export default Fiber;
 
 // garbage Collector
 import GC from './gc';
-Flight.GC = GC;
+Fiber.GC = GC;
 
 // DataComponent
 import DataComponent from './data-component';
-Flight.DataComponent = DataComponent;
+Fiber.DataComponent = DataComponent;
 
 // UIComponent
 import UIComponent from './ui-component';
-Flight.UIComponent = UIComponent;
+Fiber.UIComponent = UIComponent;
 
 // eventPool
 import { EventPool, DataEventPool, getOrCreateEventPool, detachEventPool } from './event-pool';
-Flight.namespace = getOrCreateEventPool;
+Fiber.namespace = getOrCreateEventPool;
 
 // events
 import { Event, defineEvent, defineEventType, basicEvent } from './event';
-Flight.Event = Event;
-Flight.defineEvent = defineEvent;
-Flight.defineEventType = defineEventType;
-Flight.basicEvent = basicEvent;
+Fiber.Event = Event;
+Fiber.defineEvent = defineEvent;
+Fiber.defineEventType = defineEventType;
+Fiber.basicEvent = basicEvent;
 
 // clone
 import clone from './clone';
-Flight.clone = clone;
+Fiber.clone = clone;
 
 // DOM
 import DOM from './DOM';
-Flight.DOM = DOM;
+Fiber.DOM = DOM;
 
 // Debugger
 import Debugger from './debugger';
-Flight.Debugger = Debugger;
+Fiber.Debugger = Debugger;
 
 // System events
 class System extends DataComponent {};
 const _system = new System();
-Flight.System = getOrCreateEventPool('data/system');
-Flight.System.Ready = basicEvent().alias('System:Ready');
+Fiber.System = getOrCreateEventPool('data/system');
+Fiber.System.Ready = basicEvent().alias('System:Ready');
 
-Flight.app = startupScript => {
+Fiber.app = startupScript => {
     startupScript();
-    _system.on(Flight.System).trigger(new Flight.System.Ready());
+    _system.on(Fiber.System).trigger(new Fiber.System.Ready());
 };

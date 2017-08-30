@@ -1,8 +1,8 @@
 
 export class EventPool {
-    trigger(flightEvent) {
-        flightEvent.originalEvent = flightEvent.event();
-        this.element.dispatchEvent(flightEvent.originalEvent);
+    trigger(fiberEvent) {
+        fiberEvent.originalEvent = fiberEvent.event();
+        this.element.dispatchEvent(fiberEvent.originalEvent);
     }
 
     listen(...listeners) {
@@ -11,12 +11,12 @@ export class EventPool {
         }
     }
 
-    addEventListener(flightEvent, eventHandler) {
+    addEventListener(fiberEvent, eventHandler) {
         let realHandler;
         const events = [];
-        if(typeof flightEvent == 'string') {
+        if(typeof fiberEvent == 'string') {
             realHandler = eventHandler;
-            flightEvent.trim().split(/\s/).forEach(strEvent => {
+            fiberEvent.trim().split(/\s/).forEach(strEvent => {
                 events.push(strEvent);
                 this.element.addEventListener(
                     strEvent,
@@ -26,10 +26,10 @@ export class EventPool {
         } else {
             realHandler = event => eventHandler(event.detail);
             this.element.addEventListener(
-                flightEvent.EventName,
+                fiberEvent.EventName,
                 realHandler
             );
-            events.push(flightEvent.EventName);
+            events.push(fiberEvent.EventName);
         }
         return {
             callback: realHandler,

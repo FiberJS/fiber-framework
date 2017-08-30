@@ -2,7 +2,7 @@ const GC = {
     components: new Map(),
     listeners : new Map(),
     observers : new Map(),
-    elementAttribute: 'flight-component-id',
+    elementAttribute: 'fiber-component-id',
 };
 
 GC.init = function() {

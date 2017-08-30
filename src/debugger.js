@@ -26,18 +26,18 @@ Debugger.init = function() {
 
     // EventPool
     EventPool.prototype.$$trigger = EventPool.prototype.trigger;
-    EventPool.prototype.trigger = function(flightEvent) {
-        console.log(`${flightEvent.name} triggered by ${actor.constructor.name}`);
+    EventPool.prototype.trigger = function(fiberEvent) {
+        console.log(`${fiberEvent.name} triggered by ${actor.constructor.name}`);
         if(Debugger.showEvents) {
-            console.log(flightEvent);
+            console.log(fiberEvent);
         }
-        return this.$$trigger(flightEvent);
+        return this.$$trigger(fiberEvent);
     };
 
     EventPool.prototype.$$addEventListener = EventPool.prototype.addEventListener;
-    EventPool.prototype.addEventListener = function(flightEvent, handler) {
-        let nativeEvent = (typeof flightEvent == 'string');
-        let eventName = nativeEvent ? flightEvent : flightEvent.EventName;
+    EventPool.prototype.addEventListener = function(fiberEvent, handler) {
+        let nativeEvent = (typeof fiberEvent == 'string');
+        let eventName = nativeEvent ? fiberEvent : fiberEvent.EventName;
         let boundActor = actor.constructor.name;
         let boundView = actor.view;
 
@@ -53,7 +53,7 @@ Debugger.init = function() {
             console.log(`    calling ${boundActor}.${handlerToString(handler)}`);
             return handler(event);
         }
-        return this.$$addEventListener(flightEvent, debugHandler);
+        return this.$$addEventListener(fiberEvent, debugHandler);
     };
 };
 

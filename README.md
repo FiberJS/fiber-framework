@@ -10,7 +10,7 @@
 - smooth like a well done cappuccino :coffee:
 
 ## Based on FlightJS
-Using the orininal drive behind FlightJS: to help you write highly scalable and maintainable code as a strong base for your applications. Flight's event driven architecture will help you to avoid design mistakes like **tight coupling**, **dependency-hell** (*you have to scroll a page of dependency imports to see your code*) and **wild wonders** (*magical behaviours too hard to follow and understand for common people*)
+Using the orininal drive behind FlightJS: to help you write highly scalable and maintainable code as a strong base for your applications. Fiber's event driven architecture will help you to avoid design mistakes like **tight coupling**, **dependency-hell** (*you have to scroll a page of dependency imports to see your code*) and **wild wonders** (*magical behaviours too hard to follow and understand for common people*)
 
 ## But enhanced
 - Less freetext events, more stability

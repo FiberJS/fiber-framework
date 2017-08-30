@@ -1,10 +1,10 @@
-import Flight from './';
+import Fiber from './';
 
-Flight.Event.prototype.$$event = Flight.Event.prototype.event;
-Flight.Event.prototype.event = function() {
+Fiber.Event.prototype.$$event = Fiber.Event.prototype.event;
+Fiber.Event.prototype.event = function() {
     this.__proto__.lastTriggered = this;
     return this.$$event();
 }
-Flight.Event.last = function() {
+Fiber.Event.last = function() {
     return this.prototype.lastTriggered;
 }

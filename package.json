@@ -2,7 +2,7 @@
   "name": "fiber-framework",
   "version": "1.0.0",
   "description": "The Natural way of building JavaScript Applications",
-  "main": "fiber.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,5 +24,11 @@
   "bugs": {
     "url": "https://github.com/FiberJS/fiber-framework/issues"
   },
-  "homepage": "https://github.com/FiberJS/fiber-framework#readme"
+  "homepage": "https://github.com/FiberJS/fiber-framework#readme",
+  "devDependencies": {
+    "webpack": "^3.5.5",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.18.0"
+  }
 }

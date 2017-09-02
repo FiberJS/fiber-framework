@@ -1,6 +1,5 @@
 
 const Fiber = {};
-export default Fiber;
 
 // garbage Collector
 import GC from './gc';
@@ -47,3 +46,5 @@ Fiber.app = startupScript => {
     startupScript();
     _system.on(Fiber.System).trigger(new Fiber.System.Ready());
 };
+
+export default Fiber;

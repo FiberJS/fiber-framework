@@ -17,7 +17,7 @@ class UIComponent {
     set view(element) {
         this._view = element;
         this.getOrCreateEventPool().element = element;
-        if(element && !this._attached) {
+        if(element) {
             GC.registerComponent(this);
         }
     }

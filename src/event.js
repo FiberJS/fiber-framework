@@ -1,4 +1,5 @@
 import clone from './clone';
+import { Optional } from './domain';
 
 let eventId = 0;
 
@@ -36,7 +37,11 @@ export class Event{
 
 class EventAttributeError extends Error {
     constructor(event, name, value, ParamType) {
-        super(`Type mismatch for Event '${event.name}' for attribute '${name}'`);
+        if(ParamType) {
+            super(`Type mismatch for Event '${event.name}' for attribute '${name}'`);
+        } else {
+            super(`Unexpected parameter for Event '${event.name}'`);
+        }
         this.event = event;
         this.name = name;
         this.value = value;
@@ -50,9 +55,19 @@ export function defineEventType(descriptor) {
             super();
             for(let i = 0; i < params.length; i++) {
                 const paramName = propNames[i];
-                const ParamType = descriptor[paramName];
+                if(paramName === undefined || descriptor[paramName] === undefined) {
+                    throw new EventAttributeError(this, paramName, params[i]);
+                }
+                const [ optional, ParamType ] = (
+                    Optional.isOptional(descriptor[paramName])
+                    ? [ true, descriptor[paramName].value ]
+                    : [ false, descriptor[paramName] ]
+                );
 
-                if(ParamType == Number || ParamType == String || ParamType == Boolean) {
+                if(optional && !params[i]) {
+                    // (this)[paramName] = null;
+                }
+                else if(ParamType == Number || ParamType == String || ParamType == Boolean) {
                     (this)[paramName] = new ParamType(params[i]).valueOf();
                 }
                 else if(ParamType instanceof Object && !(params[i] instanceof ParamType)) {

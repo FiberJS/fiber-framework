@@ -14,8 +14,12 @@ import UIComponent from './ui-component';
 Fiber.UIComponent = UIComponent;
 
 // eventPool
-import { EventPool, DataEventPool, getOrCreateEventPool, detachEventPool } from './event-pool';
+import { EventPool, DataEventPool, getOrCreateEventPool, detachEventPool, DefinedEvent } from './event-pool';
 Fiber.namespace = getOrCreateEventPool;
+Fiber.NameSpace = {
+    create: getOrCreateEventPool,
+    Defined: DefinedEvent,
+};
 
 // events
 import { Event, defineEvent, defineEventType, basicEvent } from './event';
@@ -37,14 +41,13 @@ import Debugger from './debugger';
 Fiber.Debugger = Debugger;
 
 // System events
-class System extends DataComponent {};
-const _system = new System();
 Fiber.System = getOrCreateEventPool('data/system');
-Fiber.System.Ready = basicEvent().alias('System:Ready');
+Fiber.System.Ready = basicEvent('System:Ready');
+const System = Fiber.DataComponent.attachTo(Fiber.System);
 
 Fiber.app = startupScript => {
     startupScript();
-    _system.on(Fiber.System).trigger(new Fiber.System.Ready());
+    System.on(Fiber.System).trigger(new Fiber.System.Ready());
 };
 
 export default Fiber;

@@ -6,6 +6,7 @@ class DataComponent {
     }
 
     init() {}
+    listen() {}
 
     on(path) {
         return path instanceof EventPool

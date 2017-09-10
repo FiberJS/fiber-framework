@@ -84,10 +84,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var Optional = exports.Optional = function Optional(value) {
-  return { isOptional: true, value: value };
+  return { $isOptional: true, value: value };
 };
-Optional.isOptional = function (obj) {
-  return obj.isOptional;
+Optional.from = function (obj) {
+  return obj.$isOptional ? [true, obj.value] : [false, obj];
 };
 
 /***/ })

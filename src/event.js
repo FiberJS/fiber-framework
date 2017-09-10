@@ -58,13 +58,9 @@ export function defineEventType(descriptor) {
                 if(paramName === undefined || descriptor[paramName] === undefined) {
                     throw new EventAttributeError(this, paramName, params[i]);
                 }
-                const [ optional, ParamType ] = (
-                    Optional.isOptional(descriptor[paramName])
-                    ? [ true, descriptor[paramName].value ]
-                    : [ false, descriptor[paramName] ]
-                );
+                const [ optional, ParamType ] = Optional.from(descriptor[paramName]);
 
-                if(optional && !params[i]) {
+                if(optional && params[i] === undefined) {
                     // (this)[paramName] = null;
                 }
                 else if(ParamType == Number || ParamType == String || ParamType == Boolean) {
@@ -88,10 +84,10 @@ export function eventOfType(EventType) {
     ).alias(`Event${++eventId}`);
 };
 
-export function basicEvent() {
+export function basicEvent(name) {
     return (
         class extends Event {}
-    ).alias(`Event${++eventId}`);
+    ).alias(name || `Event${++eventId}`);
 };
 
 export function defineEvent(EventType, alias) {

@@ -1,3 +1,7 @@
+import { basicEvent } from './event';
+import clone from './clone';
+
+export const DefinedEvent = basicEvent('Fiber:NameSpace:Defined');
 
 export class EventPool {
     trigger(fiberEvent) {
@@ -43,7 +47,7 @@ export class EventPool {
         Object.getOwnPropertyNames(stateDefinition).forEach((property) => {
             this.__state[property] = null;
             Object.defineProperty(this.state, property, {
-                get: () => this.__state[property],
+                get: () => clone(this.__state[property]),
                 enumerable: true,
             });
             const setters = stateDefinition[property](this.__state);
@@ -51,6 +55,8 @@ export class EventPool {
                 this.addEventListener(setters[i], setters[i+1]);
             }
         });
+
+        this.trigger(new DefinedEvent());
     }
 
     static forElement(element, component) {

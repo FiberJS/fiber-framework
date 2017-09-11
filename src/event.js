@@ -1,5 +1,5 @@
 import clone from './clone';
-import { Optional } from './domain';
+import { Optional, Mixed } from './domain';
 
 let eventId = 0;
 
@@ -62,6 +62,9 @@ export function defineEventType(descriptor) {
 
                 if(optional && params[i] === undefined) {
                     // (this)[paramName] = null;
+                }
+                else if(ParamType.constructor.name === 'Mixed') {
+                    (this)[paramName] = clone(params[i]);
                 }
                 else if(ParamType == Number || ParamType == String || ParamType == Boolean) {
                     (this)[paramName] = new ParamType(params[i]).valueOf();

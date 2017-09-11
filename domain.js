@@ -83,11 +83,18 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var Optional = exports.Optional = function Optional(value) {
   return { $isOptional: true, value: value };
 };
 Optional.from = function (obj) {
   return obj.$isOptional ? [true, obj.value] : [false, obj];
+};
+
+var Mixed = exports.Mixed = function Mixed() {
+  _classCallCheck(this, Mixed);
 };
 
 /***/ })

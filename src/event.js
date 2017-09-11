@@ -60,7 +60,7 @@ export function defineEventType(descriptor) {
                 }
                 const [ optional, ParamType ] = Optional.from(descriptor[paramName]);
 
-                if(optional && !params[i]) {
+                if(optional && (params[i] === undefined || params[i] === null)) {
                     (this)[paramName] = params[i];
                 }
                 else if(ParamType.constructor.name === 'Mixed') {

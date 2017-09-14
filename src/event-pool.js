@@ -5,8 +5,16 @@ export const DefinedEvent = basicEvent('Fiber:NameSpace:Defined');
 
 export class EventPool {
     trigger(fiberEvent) {
-        fiberEvent.originalEvent = fiberEvent.event();
-        this.element.dispatchEvent(fiberEvent.originalEvent);
+        return new Promise((resolve, reject) => {
+            fiberEvent.originalEvent = fiberEvent.event();
+            resolve(this.element.dispatchEvent(fiberEvent.originalEvent));
+        });
+    }
+
+    triggerSequence(...fiberEvents) {
+        return Promise.all(
+            fiberEvents.map(fiberEvent => this.trigger(fiberEvent))
+        );
     }
 
     listen(...listeners) {
@@ -28,7 +36,11 @@ export class EventPool {
                 );
             })
         } else {
-            realHandler = event => eventHandler(event.detail);
+            realHandler = event => {
+                ++EventPool.depth;
+                eventHandler(event.detail);
+                --EventPool.depth;
+            };
             this.element.addEventListener(
                 fiberEvent.EventName,
                 realHandler
@@ -107,6 +119,7 @@ export class DataEventPool extends EventPool {
         return element;
     }
 };
+EventPool.depth = 0;
 
 const dataEventPoolRoot = new DataEventPool('data');
 

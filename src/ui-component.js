@@ -1,4 +1,5 @@
 import { EventPool, getOrCreateEventPool } from './event-pool';
+import { EventFlowType, EventFlow } from './event-flow';
 import DOM from './DOM';
 import GC from './gc';
 
@@ -39,10 +40,19 @@ class UIComponent {
     }
 
     on(path) {
-        return path instanceof EventPool
-            ? new EventPoolAccessor(this, path)
-            : new EventPoolAccessor(this, getOrCreateEventPool(path))
-            ;
+        if(path instanceof EventFlowType) {
+            return this.flow(path);
+        } else if(path instanceof EventFlow) {
+            return path;
+        } else if(path instanceof EventPool) {
+            return new EventPoolAccessor(this, path);
+        }
+
+        return new EventPoolAccessor(this, getOrCreateEventPool(path));
+    }
+
+    flow(flowType) {
+        return new EventFlow(flowType);
     }
 
     ui(query) {

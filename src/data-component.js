@@ -1,4 +1,5 @@
-import {EventPool, getOrCreateEventPool} from './event-pool';
+import { EventPool, getOrCreateEventPool } from './event-pool';
+import { EventFlowType, EventFlow } from './event-flow';
 
 class DataComponent {
     constructor(...params) {
@@ -9,10 +10,18 @@ class DataComponent {
     listen() {}
 
     on(path) {
-        return path instanceof EventPool
+        if(path instanceof EventFlowType) {
+            return this.flow(path);
+        }
+
+        return path instanceof EventPool || path instanceof EventFlow
             ? path
             : getOrCreateEventPool(path)
             ;
+    }
+
+    flow(flowType) {
+        return new EventFlow(flowType);
     }
 
     static attachTo(eventPool) {

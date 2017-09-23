@@ -9,11 +9,14 @@ export class Event{
     }
 
     event() {
-        return new CustomEvent(this.name, {
-            detail     : this,
-            bubbles    : !this.constructor._cancelBubble,
-            cancelable : true
-        });
+        if(!this.originalEvent) {
+            this.originalEvent = new CustomEvent(this.name, {
+                detail     : this,
+                bubbles    : !this.constructor._cancelBubble,
+                cancelable : true
+            });
+        }
+        return this.originalEvent;
     }
 
     stopPropagation() {
@@ -32,6 +35,13 @@ export class Event{
     static alias(name) {
         this.EventName = name;
         return this;
+    }
+
+    static on(namespace) {
+        return {
+            namespace,
+            event: this,
+        };
     }
 }
 
@@ -63,7 +73,7 @@ export function defineEventType(descriptor) {
                 if(optional && (params[i] === undefined || params[i] === null)) {
                     (this)[paramName] = params[i];
                 }
-                else if(ParamType.constructor.name === 'Mixed') {
+                else if(ParamType.name === 'Mixed') {
                     (this)[paramName] = clone(params[i]);
                 }
                 else if(ParamType == Number || ParamType == String || ParamType == Boolean) {

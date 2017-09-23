@@ -28,6 +28,12 @@ Fiber.defineEvent = defineEvent;
 Fiber.defineEventType = defineEventType;
 Fiber.basicEvent = basicEvent;
 
+// event-flows
+import { EventFlowType } from './event-flow';
+Fiber.EventFlow = {
+    define: (...steps) => new EventFlowType(...steps),
+};
+
 // clone
 import clone from './clone';
 Fiber.clone = clone;

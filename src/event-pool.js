@@ -1,5 +1,5 @@
 import { basicEvent } from './event';
-import clone from './clone';
+import ReadOnly from './read-only';
 
 export const DefinedEvent = basicEvent('Fiber:NameSpace:Defined');
 
@@ -47,15 +47,11 @@ export class EventPool {
     }
 
     defineState(stateDefinition) {
-        this.__state || (this.__state = {});
-        this.state || (this.state = {});
+        this.__state || (this.__state = new ReadOnly());
+        this.state = this.__state.reader;
         Object.getOwnPropertyNames(stateDefinition).forEach((property) => {
-            this.__state[property] = null;
-            Object.defineProperty(this.state, property, {
-                get: () => clone(this.__state[property]),
-                enumerable: true,
-            });
-            const setters = stateDefinition[property](this.__state);
+            this.__state.addProperty(property);
+            const setters = stateDefinition[property](this.__state.modifier);
             for(let i = 0; i < setters.length; i+=2) {
                 this.addEventListener(setters[i], setters[i+1]);
             }

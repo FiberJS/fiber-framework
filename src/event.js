@@ -1,4 +1,4 @@
-import clone from './clone';
+import ReadOnly from './read-only';
 import { Optional, Mixed } from './domain';
 
 let eventId = 0;
@@ -63,6 +63,7 @@ export function defineEventType(descriptor) {
     const DefinedEventClass = class extends Event {
         constructor(...params) {
             super();
+            const readonly = new ReadOnly(this);
             for(let i = 0; i < params.length; i++) {
                 const paramName = propNames[i];
                 if(paramName === undefined || descriptor[paramName] === undefined) {
@@ -70,20 +71,22 @@ export function defineEventType(descriptor) {
                 }
                 const [ optional, ParamType ] = Optional.from(descriptor[paramName]);
 
+                readonly.addProperty(paramName);
+
                 if(optional && (params[i] === undefined || params[i] === null)) {
-                    (this)[paramName] = params[i];
+                    readonly.modifier[paramName] = params[i];
                 }
                 else if(ParamType.name === 'Mixed') {
-                    (this)[paramName] = clone(params[i]);
+                    readonly.modifier[paramName] = params[i];
                 }
                 else if(ParamType == Number || ParamType == String || ParamType == Boolean) {
-                    (this)[paramName] = new ParamType(params[i]).valueOf();
+                    readonly.modifier[paramName] = new ParamType(params[i]).valueOf();
                 }
                 else if(ParamType instanceof Object && !(params[i] instanceof ParamType)) {
                     throw new EventAttributeError(this, paramName, params[i], ParamType);
                 }
                 else {
-                    (this)[paramName] = clone(params[i]);
+                    readonly.modifier[paramName] = params[i];
                 }
             }
         }

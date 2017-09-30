@@ -1,15 +1,9 @@
+import ComponentInterface from './component-interface';
 import { EventPool, getOrCreateEventPool } from './event-pool';
-import { EventFlowType, EventFlow } from './event-flow';
 import DOM from './DOM';
 import GC from './gc';
 
-class UIComponent {
-
-    constructor(...params) {
-        this.init.apply(this, params);
-    }
-
-    init() {}
+class UIComponent extends ComponentInterface {
 
     get view() {
         return this._view;
@@ -22,8 +16,6 @@ class UIComponent {
             GC.registerComponent(this);
         }
     }
-
-    listen() {}
 
     render() {
         if(this.constructor.template) {
@@ -39,20 +31,13 @@ class UIComponent {
         return this.eventPool || (this.eventPool = EventPool.forComponent(this));
     }
 
-    on(path) {
-        if(path instanceof EventFlowType) {
-            return this.flow(path);
-        } else if(path instanceof EventFlow) {
-            return path;
-        } else if(path instanceof EventPool) {
-            return new EventPoolAccessor(this, path);
-        }
+    on(target) {
+        target = super.on(target);
 
-        return new EventPoolAccessor(this, getOrCreateEventPool(path));
-    }
-
-    flow(flowType) {
-        return new EventFlow(flowType);
+        return target instanceof EventPool
+            ? new EventPoolAccessor(this, target)
+            : target
+            ;
     }
 
     ui(query) {

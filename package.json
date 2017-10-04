@@ -1,6 +1,6 @@
 {
   "name": "fiber-framework",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "The Natural way of building JavaScript Applications",
   "main": "index.js",
   "scripts": {

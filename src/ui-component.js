@@ -124,6 +124,10 @@ class EventPoolAccessor {
     trigger(event) {
         return this.eventPool.trigger(event);
     }
+
+    triggerSync(event) {
+        return this.eventPool.triggerSync(event);
+    }
 }
 
 export default UIComponent;

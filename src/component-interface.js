@@ -1,4 +1,5 @@
-import { EventPool, getOrCreateEventPool } from './event-pool';
+import { EventGateway } from './event-gateway';
+import { getNameSpaceByPath } from './namespace';
 import { EventFlowType, EventFlow } from './event-flow';
 
 class ComponentInterface {
@@ -29,11 +30,12 @@ class ComponentInterface {
             return this.flow(target);
         }
 
-        return target instanceof EventPool || target instanceof EventFlow
+        return target instanceof EventGateway || target instanceof EventFlow
             ? target
-            : getOrCreateEventPool(target)
+            : getNameSpaceByPath(target)
             ;
     }
+
 
     /**
     * starts a new flow of the given FlowType

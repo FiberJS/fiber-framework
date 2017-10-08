@@ -1,5 +1,6 @@
 import ComponentInterface from './component-interface';
-import { EventPool, getOrCreateEventPool } from './event-pool';
+import { EventGateway } from './event-gateway';
+import { getNameSpaceByPath } from './namespace';
 import DOM from './DOM';
 import GC from './gc';
 
@@ -11,7 +12,7 @@ class UIComponent extends ComponentInterface {
 
     set view(element) {
         this._view = element;
-        this.getOrCreateEventPool().element = element;
+        this.getNameSpaceByPath().element = element;
         if(element) {
             GC.registerComponent(this);
         }
@@ -27,15 +28,15 @@ class UIComponent extends ComponentInterface {
         return this.view;
     }
 
-    getOrCreateEventPool() {
-        return this.eventPool || (this.eventPool = EventPool.forComponent(this));
+    getNameSpaceByPath() {
+        return this.EventGateway || (this.EventGateway = EventGateway.forComponent(this));
     }
 
     on(target) {
         target = super.on(target);
 
-        return target instanceof EventPool
-            ? new EventPoolAccessor(this, target)
+        return target instanceof EventGateway
+            ? new EventGatewayAccessor(this, target)
             : target
             ;
     }
@@ -43,9 +44,13 @@ class UIComponent extends ComponentInterface {
     ui(query) {
         let element = DOM.getElement(query || this.view, this.view);
         return element
-            ? new EventPoolAccessor(this, EventPool.forElement(element, this))
+            ? new EventGatewayAccessor(this, EventGateway.forElement(element, this))
             : null
             ;
+    }
+
+    get namespace() {
+        return this.getNameSpaceByPath();
     }
 
     static elementName() {
@@ -106,27 +111,27 @@ class UIComponent extends ComponentInterface {
     }
 }
 
-class EventPoolAccessor {
+class EventGatewayAccessor {
     constructor(component, pool) {
         this.component = component;
-        this.eventPool = pool;
+        this.EventGateway = pool;
     }
 
     listen(...listeners) {
         for(let i = 0; i < listeners.length; i += 2) {
-            const listener = this.eventPool.addEventListener(listeners[i], listeners[i+1]);
+            const listener = this.EventGateway.addEventListener(listeners[i], listeners[i+1]);
             listener.events.forEach(
-                event => GC.registerListener(this.component, this.eventPool.element, event, listener.callback)
+                event => GC.registerListener(this.component, this.EventGateway.element, event, listener.callback)
             );
         }
     }
 
     trigger(event) {
-        return this.eventPool.trigger(event);
+        return this.EventGateway.trigger(event);
     }
 
     triggerSync(event) {
-        return this.eventPool.triggerSync(event);
+        return this.EventGateway.triggerSync(event);
     }
 }
 

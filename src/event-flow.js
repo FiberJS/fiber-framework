@@ -1,5 +1,5 @@
 import { Event } from './event';
-import { EventPool } from './event-pool';
+import { EventGateway } from './event-gateway';
 
 export class EventFlowType {
 
@@ -7,7 +7,7 @@ export class EventFlowType {
         this.steps = steps;
 
         steps.forEach( step => {
-            if(!(step.namespace instanceof EventPool && step.event.EventName)) {
+            if(!(step.namespace instanceof EventGateway && step.event.EventName)) {
                 throw new Error('wrong argument for Flow step!');
             }
         });

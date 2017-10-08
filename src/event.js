@@ -3,7 +3,7 @@ import { Optional, Mixed } from './domain';
 
 let eventId = 0;
 
-export class Event{
+export class Event {
     constructor() {
         this.name = this.constructor.EventName;
     }

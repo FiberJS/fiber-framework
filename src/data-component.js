@@ -1,20 +1,26 @@
 import ComponentInterface from './component-interface';
-import { EventPool, getOrCreateEventPool } from './event-pool';
+import { EventGateway } from './event-gateway';
+import { getNameSpaceByPath } from './namespace';
 
 class DataComponent extends ComponentInterface{
 
-    static attachTo(eventPool) {
+    static attachTo(target) {
         const instance = new this();
 
-        instance.eventPool = eventPool instanceof EventPool
-            ? eventPool
-            : getOrCreateEventPool(eventPool)
+        instance.EventGateway = target instanceof EventGateway
+            ? target
+            : getNameSpaceByPath(target)
             ;
 
         instance.listen();
 
         return instance;
     }
+
+    get namespace() {
+        return this.EventGateway;
+    }
+
 }
 
 export default DataComponent;

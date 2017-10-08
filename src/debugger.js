@@ -1,6 +1,6 @@
-import DataComponent from './data-component';
+import ComponentInterface from './component-interface';
 import UIComponent from './ui-component';
-import { EventPool } from './event-pool';
+import { EventGateway } from './event-gateway';
 
 const Debugger = {};
 let actor = null;
@@ -15,8 +15,8 @@ const normalStyle = 'font-weight: normal;';
 Debugger.init = function() {
 
     // .on(), .ui() and .flow()
-    UIComponent.prototype.$$on = UIComponent.prototype.on;
-    UIComponent.prototype.on = function(path) {
+    ComponentInterface.prototype.$$on = ComponentInterface.prototype.on;
+    ComponentInterface.prototype.on = function(path) {
         actor = this;
         return this.$$on(path);
     };
@@ -25,25 +25,15 @@ Debugger.init = function() {
         actor = this;
         return this.$$ui(path);
     };
-    UIComponent.prototype.$$flow = UIComponent.prototype.flow;
-    UIComponent.prototype.flow = function(eventFlow) {
-        actor = this;
-        return this.$$flow(eventFlow);
-    };
-    DataComponent.prototype.$$on = DataComponent.prototype.on;
-    DataComponent.prototype.on = function(path) {
-        actor = this;
-        return this.$$on(path);
-    };
-    DataComponent.prototype.$$flow = DataComponent.prototype.flow;
-    DataComponent.prototype.flow = function(eventFlow) {
+    ComponentInterface.prototype.$$flow = ComponentInterface.prototype.flow;
+    ComponentInterface.prototype.flow = function(eventFlow) {
         actor = this;
         return this.$$flow(eventFlow);
     };
 
-    // EventPool
-    EventPool.prototype.$$trigger = EventPool.prototype.trigger;
-    EventPool.prototype.trigger = function(fiberEvent) {
+    // EventGateway
+    EventGateway.prototype.$$triggerSync = EventGateway.prototype.triggerSync;
+    EventGateway.prototype.triggerSync = function(fiberEvent) {
         let poolName = this.name && `data/${this.name}` || 'DOM';
         let actorName = actor.constructor.name;
         if(actorName.length == 1) {
@@ -54,11 +44,11 @@ Debugger.init = function() {
         if(Debugger.showEvents) {
             console.log(fiberEvent);
         }
-        return this.$$trigger(fiberEvent);
+        return this.$$triggerSync(fiberEvent);
     };
 
-    EventPool.prototype.$$addEventListener = EventPool.prototype.addEventListener;
-    EventPool.prototype.addEventListener = function(fiberEvent, handler) {
+    EventGateway.prototype.$$addEventListener = EventGateway.prototype.addEventListener;
+    EventGateway.prototype.addEventListener = function(fiberEvent, handler) {
         let nativeEvent = (typeof fiberEvent == 'string');
         let eventName = nativeEvent ? fiberEvent : fiberEvent.EventName;
         let boundActor = actor.constructor.name;
@@ -92,7 +82,7 @@ function handlerToString(handler) {
 }
 
 function tab() {
-    return " ".repeat(EventPool.depth * 4);
+    return " "; //.repeat(EventGateway.depth * 4);
 }
 
 export default Debugger;

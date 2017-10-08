@@ -3,6 +3,35 @@
 
 Some example applications were written already with many tweaks in the system. There are still many open questions, but hopefully soon it can move to beta stage after performance testing proves it is production ready and can handle the load of larger applications.
 
+**Demo apps:**
+- [Github repo browser](https://github.com/FiberJS/github-repo-browser)
+- [blackJack game](https://github.com/FiberJS/fiber-blackjack)
+- [TodoMVC](https://github.com/FiberJS/todoMVC)
+- [performance tests with TodoMVC](https://github.com/FiberJS/todoMVC-performance-test)
+
+# The vision
+
+We want a way to build JavaScript Apps without magic and Bible sized documentation.
+
+We want to **use** and **understand** web technologies like HTML5, CSS3 and JavaScript.
+We don't want to work with a system that hides these from me and makes everything
+work with some complex hocus-pocus.
+
+We want to be in charge of design decisions regarding state encapsulation, rendering,
+performance.
+
+## #Fiber Should be
+- simple
+- reliable
+- flexible
+- debuggable
+
+## #Fiber Should NOT  
+- have magic
+- be tightly coupled
+- come with extensive boilerplate
+- be opinionated
+
 ## Features
 - event-driven architecture
 - decoupled components
@@ -30,7 +59,7 @@ Another typical problem of modern frameworks is that they are trying to be the s
 
 # What's next?
 
-- webpack built minified version
-- performance tests - creating and tearing down components at scale
++ webpack built minified version ( [index.js](https://github.com/FiberJS/fiber-framework/blob/master/index.js) )
++ [performance test](https://fiberjs-performance-test.herokuapp.com/)
 - finalizing namespace and basic API
 - writing tests to ensure stable state after first prototype stage is over

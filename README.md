@@ -59,7 +59,7 @@ Another typical problem of modern frameworks is that they are trying to be the s
 
 # What's next?
 
-+ webpack built minified version ( [index.js](https://github.com/FiberJS/fiber-framework/blob/master/index.js) )
-+ [performance test](https://fiberjs-performance-test.herokuapp.com/)
+- (done) webpack built minified version ( [index.js](https://github.com/FiberJS/fiber-framework/blob/master/index.js) )
+- (done) [performance test](https://fiberjs-performance-test.herokuapp.com/)
 - finalizing namespace and basic API
 - writing tests to ensure stable state after first prototype stage is over

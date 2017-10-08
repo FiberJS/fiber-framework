@@ -14,7 +14,7 @@ Some example applications were written already with many tweaks in the system. T
 We want a way to build JavaScript Apps without magic and Bible sized documentation.
 
 We want to **use** and **understand** web technologies like HTML5, CSS3 and JavaScript.
-We don't want to work with a system that hides these from me and makes everything
+We don't want to work with a system that hides these from us and makes everything
 work with some complex hocus-pocus.
 
 We want to be in charge of design decisions regarding state encapsulation, rendering,

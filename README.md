@@ -14,8 +14,6 @@ Some example applications were written already with many tweaks in the system. T
 We want a way to build JavaScript Apps without magic and Bible sized documentation.
 
 We want to **use** and **understand** web technologies like HTML5, CSS3 and JavaScript.
-We don't want to work with a system that hides these from us and makes everything
-work with some complex hocus-pocus.
 
 We want to be in charge of design decisions regarding state encapsulation, rendering,
 performance.
@@ -37,15 +35,15 @@ performance.
 - decoupled components
 - super lightweight
 - non-opinionated
-- webpack compatible
 - easily debuggable and testable
 - smooth like a well done cappuccino :coffee:
 
 ## Following the footsteps of FlightJS
-Using the orininal drive behind FlightJS: to help you write highly scalable and maintainable code as a strong base for your applications. Fiber's event driven architecture will help you to avoid design mistakes like **tight coupling**, **dependency-hell** (*you have to scroll a page of dependency imports to see your code*) and **wild wonders** (*magical behaviours too hard to follow and understand for common people*)
+Using the orininal drive behind FlightJS: to help you write highly scalable and maintainable code as a strong base for your applications. Fiber's event driven architecture will help you to avoid design mistakes like **tight coupling** or **dependency-hell** - when *you have to scroll a page of dependency imports to see your code* and you have to *refactor all your tests because you changed something in a service*.
 
 ## But enhanced
 - Less freetext events, more stability
+- immutable event data
 - Using ES6, Webpack and modern debugging tools
 - Features **state encapsulation** in namespaces, but you can use it with **Redux** or can write stateful components - the choice is yours to make.
 
@@ -54,6 +52,8 @@ Using a shadow DOM to host data events makes communication between parts of the 
 Most frameworks are wasting lots of resources on dependency injection when the best way to tackle dependencies is to get rid of them as much as possible.
 
 Another typical problem of modern frameworks is that they are trying to be the swiss-army-knife of all your problems - becoming too complex and restrictive in the process.
+
+Fiber is designed to be modular. Its core is kept small, simple and extendable.
 
 # What's next?
 

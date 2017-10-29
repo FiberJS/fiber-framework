@@ -121,7 +121,7 @@ class EventGatewayAccessor {
         for(let i = 0; i < listeners.length; i += 2) {
             const listener = this.EventGateway.addEventListener(listeners[i], listeners[i+1]);
             listener.events.forEach(
-                event => GC.registerListener(this.component, this.EventGateway.element, event, listener.callback)
+                event => GC.registerListener(this.component, listener.element, event, listener.callback)
             );
         }
     }

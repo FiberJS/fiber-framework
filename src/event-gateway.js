@@ -28,12 +28,10 @@ export class EventGateway {
                 );
             })
         } else if(!(fiberEvent instanceof Event) && fiberEvent.namespace instanceof EventGateway) {
-            realHandler = event => eventHandler(event.detail);
-            fiberEvent.namespace.element.addEventListener(
-                fiberEvent.event.EventName,
-                realHandler
+            return fiberEvent.namespace.addEventListener(
+                fiberEvent.event,
+                eventHandler
             );
-            events.push(fiberEvent.EventName);
         } else {
             realHandler = event => eventHandler(event.detail);
             this.element.addEventListener(
@@ -44,7 +42,8 @@ export class EventGateway {
         }
         return {
             callback: realHandler,
-            events: events
+            events: events,
+            element: this.element,
         };
     }
 

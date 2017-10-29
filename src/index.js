@@ -14,10 +14,10 @@ import UIComponent from './ui-component';
 Fiber.UIComponent = UIComponent;
 
 // Namespace
-import { NameSpace, getNameSpaceByPath, DefinedEvent } from './namespace';
-Fiber.namespace = getNameSpaceByPath;
+import { NameSpace, DefinedEvent } from './namespace';
+Fiber.namespace = (name) => NameSpace.get(name);
 Fiber.NameSpace = {
-    create: getNameSpaceByPath,
+    create: (name) => NameSpace.get(name),
     Defined: DefinedEvent,
 };
 
@@ -47,7 +47,7 @@ import Debugger from './debugger';
 Fiber.Debugger = Debugger;
 
 // System events
-Fiber.System = getNameSpaceByPath('data/system');
+Fiber.System = NameSpace.get('data/system');
 Fiber.System.Ready = basicEvent('System:Ready');
 const System = Fiber.DataComponent.attachTo(Fiber.System);
 

@@ -47,7 +47,7 @@ Using the orininal drive behind FlightJS: to help you write highly scalable and 
 - Using ES6, Webpack and modern debugging tools
 - Features **state encapsulation** in namespaces, but you can use it with **Redux** or can write stateful components - the choice is yours to make.
 
-Using a shadow DOM to host data events makes communication between parts of the application easier to follow. Components don't rely solely on their position in the DOM anymore. By declaring clear namespaces for certain resources and their events, and joining them with an isolated state we can create a system that is easy to read, understand and maintain.
+Using a custom pub/sub system to host data events makes communication faster and more reliable. By declaring clear namespaces for certain resources and their events, and joining them with an isolated state we can create a system that is easy to read, understand and maintain.
 
 Most frameworks are wasting lots of resources on dependency injection when the best way to tackle dependencies is to get rid of them as much as possible.
 

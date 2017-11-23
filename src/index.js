@@ -18,7 +18,7 @@ import { NameSpace, DefinedEvent } from './namespace';
 Fiber.namespace = (name) => NameSpace.get(name);
 Fiber.NameSpace = {
     create: (name) => NameSpace.get(name),
-    Defined: DefinedEvent,
+    Defined: DefinedEvent
 };
 
 // events
@@ -55,5 +55,9 @@ Fiber.app = startupScript => {
     startupScript();
     System.on(Fiber.System).trigger(new Fiber.System.Ready());
 };
+
+import { EventGateway } from './event-gateway';
+import { registerSystemLoaded } from './global';
+registerSystemLoaded({Fiber, NameSpace, EventGateway});
 
 export default Fiber;

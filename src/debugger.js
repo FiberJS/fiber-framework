@@ -1,6 +1,7 @@
 import ComponentInterface from './component-interface';
 import UIComponent from './ui-component';
 import { EventGateway } from './event-gateway';
+import { NameSpace } from './namespace';
 
 const Debugger = {};
 let actor = null;
@@ -32,9 +33,8 @@ Debugger.init = function() {
     };
 
     // EventGateway
-    EventGateway.prototype.$$triggerSync = EventGateway.prototype.triggerSync;
-    EventGateway.prototype.triggerSync = function(fiberEvent) {
-        let poolName = this.name && `data/${this.name}` || 'DOM';
+    const debuggerTriggerSync = function(fiberEvent) {
+        let poolName = this.name || 'DOM';
         let actorName = actor.constructor.name;
         if(actorName.length == 1) {
             actorName = 'FiberJS';
@@ -46,6 +46,12 @@ Debugger.init = function() {
         }
         return this.$$triggerSync(fiberEvent);
     };
+    EventGateway.prototype.$$triggerSync = EventGateway.prototype.triggerSync;
+    EventGateway.prototype.triggerSync = debuggerTriggerSync;
+
+    // NameSpace
+    NameSpace.prototype.$$triggerSync = NameSpace.prototype.triggerSync;
+    NameSpace.prototype.triggerSync = debuggerTriggerSync;
 
     EventGateway.prototype.$$addEventListener = EventGateway.prototype.addEventListener;
     EventGateway.prototype.addEventListener = function(fiberEvent, handler) {

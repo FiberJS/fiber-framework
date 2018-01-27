@@ -17,13 +17,15 @@ export class EventFlowType {
 export class EventFlow {
 
     constructor(flowType) {
-        this.steps = flowType.steps;
+        this.steps = flowType.steps.slice();
         this.currentEvent = null;
         this.currentNameSpace = null;
         this.promise = new Promise((resolve, reject) => {
             this.resolve = resolve;
             this.reject = reject;
         });
+
+        this.history = [];
     }
 
     trigger(fiberEvent) {
@@ -35,6 +37,8 @@ export class EventFlow {
         if(! fiberEvent instanceof step.event) {
             this.reject(fiberEvent);
         }
+
+        this.history.push(fiberEvent);
 
         this.currentEvent = fiberEvent;
         this.currentNameSpace = step.namespace;

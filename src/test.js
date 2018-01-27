@@ -20,11 +20,6 @@ afterSystemLoaded( ({Fiber, NameSpace, EventGateway}) => {
         fiberEvent.event();
         return this.$$triggerSync(fiberEvent);
     }
-
-    EventGateway.prototype.$$trigger = EventGateway.prototype.trigger;
-    EventGateway.prototype.trigger = function(fiberEvent) {
-        return this.triggerSync(fiberEvent);
-    }
 });
 
 export function lastTriggeredOf(EventType) {

@@ -1,8 +1,8 @@
 export class EventGateway {
     trigger(fiberEvent) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => resolve(this.triggerSync(fiberEvent)), 0);
-        });
+        return new Promise(
+            resolve => resolve(this.triggerSync(fiberEvent))
+        );
     }
 
     triggerSync(fiberEvent) {
@@ -20,7 +20,7 @@ export class EventGateway {
         const events = [];
         if(typeof fiberEvent == 'string') {
             realHandler = eventHandler;
-            fiberEvent.trim().split(/\s/).forEach(strEvent => {
+            fiberEvent.trim().split(/\s+/).forEach(strEvent => {
                 events.push(strEvent);
                 this.element.addEventListener(
                     strEvent,

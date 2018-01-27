@@ -112,11 +112,6 @@ var triggerLogs = new Map();
         fiberEvent.event();
         return this.$$triggerSync(fiberEvent);
     };
-
-    EventGateway.prototype.$$trigger = EventGateway.prototype.trigger;
-    EventGateway.prototype.trigger = function (fiberEvent) {
-        return this.triggerSync(fiberEvent);
-    };
 });
 
 function lastTriggeredOf(EventType) {

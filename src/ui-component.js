@@ -118,6 +118,7 @@ class EventGatewayAccessor {
     }
 
     listen(...listeners) {
+        console.log(...listeners);
         for(let i = 0; i < listeners.length; i += 2) {
             const listener = this.EventGateway.addEventListener(listeners[i], listeners[i+1]);
             listener.events.forEach(

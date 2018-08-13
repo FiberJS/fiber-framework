@@ -24,3 +24,12 @@ export default function clone(obj) {
 
     return copied;
 }
+
+export function coldClone(target) {
+  const cloned = clone(target);
+
+  return target === cloned
+    ? target
+    : Object.freeze(target)
+    ;
+}

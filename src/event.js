@@ -71,22 +71,20 @@ export function defineEventType(descriptor) {
                 }
                 const [ optional, ParamType ] = Optional.from(descriptor[paramName]);
 
-                readonly.addProperty(paramName);
-
                 if(optional && (params[i] === undefined || params[i] === null)) {
-                    readonly.modifier[paramName] = params[i];
+                    readonly.addProperty(paramName, params[i]);
                 }
                 else if(ParamType.name === 'Mixed') {
-                    readonly.modifier[paramName] = params[i];
+                    readonly.addProperty(paramName, params[i]);
                 }
                 else if(ParamType == Number || ParamType == String || ParamType == Boolean) {
-                    readonly.modifier[paramName] = new ParamType(params[i]).valueOf();
+                    readonly.addProperty(paramName, new ParamType(params[i]).valueOf());
                 }
                 else if(ParamType instanceof Object && !(params[i] instanceof ParamType)) {
                     throw new EventAttributeError(this, paramName, params[i], ParamType);
                 }
                 else {
-                    readonly.modifier[paramName] = params[i];
+                    readonly.addProperty(paramName, params[i]);
                 }
             }
         }

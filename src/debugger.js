@@ -35,7 +35,7 @@ Debugger.init = function() {
     // EventGateway
     const debuggerTriggerSync = function(fiberEvent) {
         let poolName = this.name || 'DOM';
-        let actorName = actor.constructor.name;
+        let actorName = actor.displayName || actor.constructor.name;
         if(actorName.length == 1) {
             actorName = 'FiberJS';
         }

@@ -1,4 +1,4 @@
-import clone from './clone';
+import { coldClone } from './clone';
 
 export function readOnly(original) {
     return original instanceof Object
@@ -20,10 +20,10 @@ class ReadOnly {
         this.modifier = {};
     }
 
-    addProperty(name) {
-        this.modifier[name] = null;
+    addProperty(name, value) {
+        this.modifier[name] = coldClone(value);
         Object.defineProperty(this.reader, name, {
-            get: () => clone(this.modifier[name]),
+            get: () => this.modifier[name],
             // get: () => readOnly(this.modifier[name]),
             enumerable: true,
         });
